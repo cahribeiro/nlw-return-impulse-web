@@ -24,18 +24,24 @@ export function FeedbackContentStep({
   const feedbackTypeInfo = feedbackTypes[feedbackType];
 
   async function handleSubmitFeedback(event: FormEvent) {
-    event.preventDefault();
+    try {
+      event.preventDefault();
 
-    setIsSendingFeedback(true);
-    //console.log({screenshot,comment});
-    await api.post('/feedbacks', {
-      type: feedbackType,
-      comment,
-      screenshot,
-    })
+      setIsSendingFeedback(true);
+      //console.log({screenshot,comment});
+      await api.post('/feedbacks', {
+        type: feedbackType,
+        comment,
+        screenshot,
+      })
 
-    setIsSendingFeedback(false);
-    onFeedbackSent();
+      setIsSendingFeedback(false);
+      onFeedbackSent();
+
+    } catch (error) {
+      setIsSendingFeedback(false);
+    }
+
   }
 
   return (
